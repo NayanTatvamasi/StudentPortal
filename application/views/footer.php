@@ -4,6 +4,19 @@
   </div>
 </div>
 </body>
+<style>
+  table tbody tr:nth-child(odd) {
+    background-color: #F3FAFF;
+  }
+
+  table tbody tr:nth-child(even) {
+    background-color: #FFFFFF;
+  }
+
+  table tbody tr:hover {
+    background-color: #BCD2E5;
+  }
+</style>
 <script>
   $(function() {
 

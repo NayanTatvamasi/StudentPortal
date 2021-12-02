@@ -35,8 +35,9 @@ class result_m extends CI_Model
 
 	public function addMarks($dataArray)
 	{
-
-		$this->db->insert('marks', $dataArray);
+		foreach($dataArray as $row){
+		$this->db->insert('marks', $row);
+		}
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		} else {
@@ -93,12 +94,26 @@ class result_m extends CI_Model
 			return false;
 		}
 	}
-	public function  tmarksList($z, $s,$id)
+	public function  tmarksList($z, $s, $id)
 	{
 		$this->db->order_by('event_date', 'asc');
 		$query = $this->db->where('classroomid', $z)->where('subject', $s)->where('studentid', $id)->get('marks');
 		if ($query->num_rows() > 0) {
-			return $query->result_array();
+			return $query->result();
+			// echo "<pre>";
+			// print_r($query->result_array());
+			// exit;
+		} else {
+			return false;
+		}
+	}
+
+	public function  exportList($z, $s)
+	{
+		$this->db->order_by('student.studentid', 'asc');
+		$query = $this->db->join('student', 'student.studentid=marks.studentid')->where('marks.classroomid', $z)->where('marks.subject', $s)->get('marks');
+		if ($query->num_rows() > 0) {
+			return $query->result();
 			// echo "<pre>";
 			// print_r($query->result_array());
 			// exit;
@@ -109,10 +124,17 @@ class result_m extends CI_Model
 
 	public function  smarksList($x)
 	{
+		$month = $this->input->post('monthSelect');
+		// print_r($month);
+		// exit;
 		$this->db->order_by('event_date', 'asc');
-		$query = $this->db->where('studentid', $x)->get('marks');
+		if ($month == '') {
+			$query = $this->db->join('student', 'student.studentid=marks.studentid')->where('marks.studentid', $x)->get('marks');
+		} else {
+			$query = $this->db->join('student', 'student.studentid=marks.studentid')->where('marks.studentid', $x)->where('MONTH(marks.event_date)',$month)->get('marks');
+		}
 		if ($query->num_rows() > 0) {
-			return $query->result_array();
+			return $query->result();
 		} else {
 			return false;
 		}

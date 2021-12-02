@@ -83,7 +83,8 @@
                                             '' => 'Select Class',
                                             'A' => 'A',
                                             'B' => 'B',
-                                            'C' => 'C'
+                                            'C' => 'C',
+                                            'ALL'=>'ALL'
                                         ); ?>
                                         <?php echo form_dropdown('classroomid', $class, '', 'class="form-select"');  ?>
                                     </div>
@@ -137,7 +138,7 @@
     </div> -->
 
 
-    <table class="table table-bordered table-responsive" style="margin-top: 20px; text-align:center;">
+    <table class="table table-bordered table-responsive" style="margin-top: 20px; text-align:center;background-color: #BCD2E5;">
         <thead>
             <tr>
                 <th>Number</th>
@@ -194,9 +195,9 @@
         }
 
         showAllTeacher();
-        setInterval(function(){
-            showAllTeacher();
-        },1000);
+        // setInterval(function(){
+        //     showAllTeacher();
+        // },1000);
 
         // Add Teacher
         $('#addTeacher').on('click', function() {

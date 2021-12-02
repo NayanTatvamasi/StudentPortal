@@ -1,3 +1,4 @@
+<? //php include('header.php');?>
 <!DOCTYPE html>
 <!--
 Template Name: Metronic - Bootstrap 4 HTML, React, Angular 9 & VueJS Admin Dashboard Theme
@@ -17,7 +18,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <head>
     <base href="">
     <meta charset="utf-8" />
-    <title>Metronic | Dashboard</title>
+    <title>Calendar</title>
     <meta name="description" content="Updates and statistics" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
@@ -27,6 +28,10 @@ License: You must have a valid license purchased only from themeforest(the above
 
     <!--begin::Page Vendors Styles(used by this page)-->
     <link href="<?= base_url('Assets/dist/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css'); ?>" rel="stylesheet" type="text/css" />
+    <!--end::Page Vendors Styles-->
+
+    <!--begin::Page Vendors Styles(used by this page)-->
+    <link href="<?= base_url('Assets/dist/assets/plugins/custom/datatables/datatables.bundle.css'); ?>" rel="stylesheet" type="text/css" />
     <!--end::Page Vendors Styles-->
 
 
@@ -52,129 +57,167 @@ License: You must have a valid license purchased only from themeforest(the above
 <body id="kt_body">
 
     <!--begin::Main-->
-    <!--begin::Header Mobile-->
-    <div id="kt_header_mobile" class="header-mobile align-items-center  header-mobile-fixed ">
-        <!--begin::Logo-->
-        <a href="#">
-
-        </a>
-        <!--end::Logo-->
-
-        <!--begin::Toolbar-->
-        <div class="d-flex align-items-center">
-            <!--begin::Aside Mobile Toggle-->
-            <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
-                <span></span>
-            </button>
-            <!--end::Aside Mobile Toggle-->
-
-        </div>
-        <!--end::Toolbar-->
-    </div>
-    <!--end::Header Mobile-->
     <div class="d-flex flex-column flex-root">
         <!--begin::Page-->
         <div class="d-flex flex-row flex-column-fluid page">
-
-            <!--begin::Aside-->
-            <div class="aside aside-left  aside-fixed  d-flex flex-column flex-row-auto" id="kt_aside">
-                <!--begin::Brand-->
-                <div class="brand flex-column-auto " id="kt_brand">
-                    <!--begin::Logo-->
-                    <a href="#" class="brand-logo">
-                        <!-- <img alt="Logo" src="<? //= base_url('Assets/dist/assets/media/logos/logo-light.png');
-                                                    ?>" /> -->
-                    </a>
-                    <!--end::Logo-->
-
-                    <!--begin::Toggle-->
-                    <button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
-                        <span class="svg-icon svg-icon svg-icon-xl">
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-left.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <polygon points="0 0 24 0 24 24 0 24" />
-                                    <path d="M5.29288961,6.70710318 C4.90236532,6.31657888 4.90236532,5.68341391 5.29288961,5.29288961 C5.68341391,4.90236532 6.31657888,4.90236532 6.70710318,5.29288961 L12.7071032,11.2928896 C13.0856821,11.6714686 13.0989277,12.281055 12.7371505,12.675721 L7.23715054,18.675721 C6.86395813,19.08284 6.23139076,19.1103429 5.82427177,18.7371505 C5.41715278,18.3639581 5.38964985,17.7313908 5.76284226,17.3242718 L10.6158586,12.0300721 L5.29288961,6.70710318 Z" fill="#000000" fill-rule="nonzero" transform="translate(8.999997, 11.999999) scale(-1, 1) translate(-8.999997, -11.999999) " />
-                                    <path d="M10.7071009,15.7071068 C10.3165766,16.0976311 9.68341162,16.0976311 9.29288733,15.7071068 C8.90236304,15.3165825 8.90236304,14.6834175 9.29288733,14.2928932 L15.2928873,8.29289322 C15.6714663,7.91431428 16.2810527,7.90106866 16.6757187,8.26284586 L22.6757187,13.7628459 C23.0828377,14.1360383 23.1103407,14.7686056 22.7371482,15.1757246 C22.3639558,15.5828436 21.7313885,15.6103465 21.3242695,15.2371541 L16.0300699,10.3841378 L10.7071009,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(15.999997, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-15.999997, -11.999999) " />
-                                </g>
-                            </svg>
-                            <!--end::Svg Icon-->
-                        </span> </button>
-                    <!--end::Toolbar-->
-                </div>
-                <!--end::Brand-->
-
-                <!--begin::Aside Menu-->
-                <div class="aside-menu-wrapper flex-column-fluid" id="kt_aside_menu_wrapper">
-
-                    <!--begin::Menu Container-->
-                    <div id="kt_aside_menu" class="aside-menu my-4 " data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
-                        <!--begin::Menu Nav-->
-                        <ul class="menu-nav ">
-
-
-                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover"><a href="javascript:;" class="menu-link menu-toggle"><span class="svg-icon menu-icon">
-                                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Select.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <polygon points="0 0 24 0 24 24 0 24" />
-                                                <path d="M18.5,8 C17.1192881,8 16,6.88071187 16,5.5 C16,4.11928813 17.1192881,3 18.5,3 C19.8807119,3 21,4.11928813 21,5.5 C21,6.88071187 19.8807119,8 18.5,8 Z M18.5,21 C17.1192881,21 16,19.8807119 16,18.5 C16,17.1192881 17.1192881,16 18.5,16 C19.8807119,16 21,17.1192881 21,18.5 C21,19.8807119 19.8807119,21 18.5,21 Z M5.5,21 C4.11928813,21 3,19.8807119 3,18.5 C3,17.1192881 4.11928813,16 5.5,16 C6.88071187,16 8,17.1192881 8,18.5 C8,19.8807119 6.88071187,21 5.5,21 Z" fill="#000000" opacity="0.3" />
-                                                <path d="M5.5,8 C4.11928813,8 3,6.88071187 3,5.5 C3,4.11928813 4.11928813,3 5.5,3 C6.88071187,3 8,4.11928813 8,5.5 C8,6.88071187 6.88071187,8 5.5,8 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 C14,5.55228475 13.5522847,6 13,6 L11,6 C10.4477153,6 10,5.55228475 10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,18 L13,18 C13.5522847,18 14,18.4477153 14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 C10,18.4477153 10.4477153,18 11,18 Z M5,10 C5.55228475,10 6,10.4477153 6,11 L6,13 C6,13.5522847 5.55228475,14 5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 C18.4477153,14 18,13.5522847 18,13 L18,11 C18,10.4477153 18.4477153,10 19,10 Z" fill="#000000" />
-                                            </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                    </span><span class="menu-text">Calendar</span><i class="menu-arrow"></i></a>
-                                <div class="menu-submenu "><i class="menu-arrow"></i>
-                                    <ul class="menu-subnav">
-                                        <li class="menu-item  menu-item-parent" aria-haspopup="true"><span class="menu-link"><span class="menu-text">Calendar</span></span></li>
-                                        <li class="menu-item " aria-haspopup="true"><a href="#" class="menu-link "><i class="menu-bullet menu-bullet-dot"><span></span></i><span class="menu-text">All Events</span></a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                        <!--end::Menu Nav-->
-                    </div>
-                    <!--end::Menu Container-->
-                </div>
-                <!--end::Aside Menu-->
-            </div>
-            <!--end::Aside-->
-
-
-
-
             <!--begin::Wrapper-->
             <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
-                <!--begin::Content-->
-                <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
-                    <!--begin::Entry-->
+
+                <!--begin::Entry-->
+                <div class="d-flex flex-column-fluid">
+                    <!--begin::Container-->
+                    <div class=" container ">
+                        <!--begin::Card Calendar-->
+                        <div class="card card-custom">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h3 class="card-label">
+                                        Background Calendar
+                                    </h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#" class="btn btn-light-primary font-weight-bold">
+                                        <i class="ki ki-plus icon-md mr-2"></i> Add Event
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div id="kt_calendar"></div>
+                            </div>
+                        </div>
+                        <!--end::Card Calendar-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Entry-->
+
+                <!--begin:: studentListContent-->
+                <!-- <div class="content  d-flex flex-column flex-column-fluid" id="kt_content">
+
+                    
                     <div class="d-flex flex-column-fluid">
-                        <!--begin::Container-->
+                        
                         <div class=" container ">
-                            <!--begin::Card-->
-                            <div class="card card-custom">
-                                <div class="card-header">
+                            
+                            <div class="card card-custom gutter-b">
+                                <div class="card-header flex-wrap border-0 pt-6 pb-0">
                                     <div class="card-title">
                                         <h3 class="card-label">
-                                            Background Calendar
+                                            Scrollable Table
+                                            <span class="d-block text-muted pt-2 font-size-sm">scrollable datatable with
+                                                fixed height</span>
                                         </h3>
                                     </div>
                                     <div class="card-toolbar">
-                                        <a href="#" class="btn btn-light-primary font-weight-bold">
-                                            <i class="ki ki-plus icon-md mr-2"></i> Add Event
+                                        
+                                        <div class="dropdown dropdown-inline mr-2">
+                                            <button type="button" class="btn btn-light-primary font-weight-bolder dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="svg-icon svg-icon-md">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24" />
+                                                            <path d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z" fill="#000000" opacity="0.3" />
+                                                            <path d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z" fill="#000000" />
+                                                        </g>
+                                                    </svg>
+                                                    
+                                                </span> Export
+                                            </button>
+
+                                           
+                                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                                               
+                                                <ul class="navi flex-column navi-hover py-2">
+                                                    <li class="navi-header font-weight-bolder text-uppercase font-size-sm text-primary pb-2">
+                                                        Choose an option:
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <a href="#" class="navi-link">
+                                                            <span class="navi-icon"><i class="la la-print"></i></span>
+                                                            <span class="navi-text">Print</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <a href="#" class="navi-link">
+                                                            <span class="navi-icon"><i class="la la-copy"></i></span>
+                                                            <span class="navi-text">Copy</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <a href="#" class="navi-link">
+                                                            <span class="navi-icon"><i class="la la-file-excel-o"></i></span>
+                                                            <span class="navi-text">Excel</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <a href="#" class="navi-link">
+                                                            <span class="navi-icon"><i class="la la-file-text-o"></i></span>
+                                                            <span class="navi-text">CSV</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="navi-item">
+                                                        <a href="#" class="navi-link">
+                                                            <span class="navi-icon"><i class="la la-file-pdf-o"></i></span>
+                                                            <span class="navi-text">PDF</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                
+                                            </div>
+                                            
+                                        </div>
+                                        
+
+                                       
+                                        <a href="#" class="btn btn-primary font-weight-bolder">
+                                            <span class="svg-icon svg-icon-md">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                        <rect x="0" y="0" width="24" height="24" />
+                                                        <circle fill="#000000" cx="9" cy="15" r="6" />
+                                                        <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
+                                                    </g>
+                                                </svg>
+                                                
+                                            </span> New Record
                                         </a>
+                                        
                                     </div>
                                 </div>
+
                                 <div class="card-body">
-                                    <div id="kt_calendar"></div>
+                                    
+                                    <table class="table table-separate table-head-custom table-checkable" id="kt_datatable1">
+                                        <thead>
+                                            <tr>
+                                                <th>Record Number</th>
+                                                <th>Student ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Class room</th>
+                                                <th>STD</th>
+                                                <th>Date of Birth</th>
+                                                <th>Contact Number</th>
+                                                <th>Register Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="innerstudentList">
+
+                                        </tbody>
+
+                                    </table>
+                                   
                                 </div>
                             </div>
-                            <!--end::Card-->
-
                         </div>
-                        <!--end::Container-->
+                        
                     </div>
-                    <!--end::Entry-->
-                </div>
-                <!--end::Content-->
+                    
+                </div> -->
+                <!--end::studentListContent Content-->
+
             </div>
             <!--end::Wrapper-->
 
@@ -262,37 +305,61 @@ License: You must have a valid license purchased only from themeforest(the above
     <script src="<?= base_url('Assets/dist/assets/js/pages/widgets.js'); ?>"></script>
     <!--end::Page Scripts-->
 
+    <!--begin::Page Vendors(used by this page)-->
+    <script src="<?= base_url('Assets/dist/assets/plugins/custom/datatables/datatables.bundle.js'); ?>"></script>
+    <!--end::Page Vendors-->
+
+    <!--begin::Page Scripts(used by this page)-->
+    <script src="<?= base_url('Assets/dist/assets/js/pages/crud/datatables/basic/scrollable.js'); ?>"></script>
+    <!--end::Page Scripts-->
+
+
+    <!--begin: Calendar Script For Data -->
     <script>
         function eventsData() {
+            var eventDataList = [];
             $.ajax({
                 type: 'ajax',
+                method: 'post',
                 url: '<?php echo base_url() ?>admin/eventList',
+                async: false,
                 dataType: 'json',
                 success: function(data) {
                     // alert('hello');
                     var i;
-                    var  eventDataList = '[';
+                    var cName;
+                    // var eventDataList = '';
+
                     for (i = 0; i < data.length; i++) {
 
-                        eventDataList += '{' +
-                            'title: ' + data[i].event_title + ',' +
-                            'start: ' + data[i].event_date + 'T' + data[i].event_time + ',' +
-                            'description: ' + data[i].event_body + ',' +
-                            'end: ' + data[i].event_date + 'T' + data[i].event_time + ',' +
-                            'className: "fc-event-primary"' +
-                            '},';
+
+                        if (data[i].teacher_id == '1596') {
+                            cName = "fc-event-danger";
+                        } else {
+                            cName = "fc-event-primary";
+                        }
+
+                        eventDataList[i] = {
+                            title: data[i].event_title,
+                            start: data[i].event_date + 'T' + data[i].event_time,
+                            description: data[i].event_body,
+                            end: data[i].event_date,
+                            className: cName
+                        };
+
 
                     }
-                    eventDataList += '],';
                     // console.log(eventDataList);
+
 
                 }
 
             });
 
+            return eventDataList;
+
         }
 
-        eventsData();
         "use strict";
 
         var KTCalendarBackgroundEvents = function() {
@@ -301,6 +368,8 @@ License: You must have a valid license purchased only from themeforest(the above
                 //main function to initiate the module
                 init: function() {
 
+                    var edata = eventsData();
+                    // console.log(edata);
                     var todayDate = moment().startOf('day');
                     var YM = todayDate.format('YYYY-MM');
                     var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
@@ -324,7 +393,6 @@ License: You must have a valid license purchased only from themeforest(the above
                         aspectRatio: 3, // see: https://fullcalendar.io/docs/aspectRatio
 
                         nowIndicator: true,
-                        now: TODAY + 'T09:25:00', // just for demo
 
                         views: {
                             dayGridMonth: {
@@ -347,14 +415,8 @@ License: You must have a valid license purchased only from themeforest(the above
                         businessHours: true, // display business hours
 
 
-                        events: [{
-                            title: 'All Day Event',
-                            start: YM + '-01',
-                            description: 'Toto lorem ipsum dolor sit incid idunt ut',
-                            className: "fc-event-danger fc-event-solid-warning",
-                            color: KTApp.getSettings()['colors']['theme']['base']['info'],
-                            rendering: 'background'
-                        }],
+                        events: edata, //Display Data
+
 
                         eventRender: function(info) {
                             var element = $(info.el);
@@ -383,11 +445,74 @@ License: You must have a valid license purchased only from themeforest(the above
             KTCalendarBackgroundEvents.init();
         });
     </script>
+    <!-- end: Calendar Script For Data -->
+
+    <!--begin: Student List Script For Data -->
+    <!-- <script>
+        function showAllStudent() {
+            // alert('click');
+            $count = 0;
+            $.ajax({
+                type: 'ajax',
+                url: '<? //php echo base_url() 
+                        ?>admin/showAllStudent',
+                dataType: 'json',
+                success: function(data) {
+                    // alert('hello');
+                    var html = '';
+                    var i;
+
+                    for (i = 0; i < data.length; i++) {
+
+                        html += '<tr>' +
+                            '<td>' + ++$count + '</td>' +
+                            '<td>' + data[i].studentid + '</td>' +
+                            '<td>' + data[i].firstname + '</td>' +
+                            '<td>' + data[i].lastname + '</td>' +
+                            '<td>' + data[i].classroomid + '</td>' +
+                            '<td>' + data[i].standard + '</td>' +
+                            '<td>' + data[i].dob + '</td>' +
+                            '<td>' + data[i].contact_no + '</td>' +
+                            '<td>' + data[i].register_date + '</td>' +
+                            '<td>' + '<a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">\
+	                            <span class="svg-icon svg-icon-md">\
+	                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">\
+	                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\
+	                                        <rect x="0" y="0" width="24" height="24"/>\
+	                                        <path d="M8,17.9148182 L8,5.96685884 C8,5.56391781 8.16211443,5.17792052 8.44982609,4.89581508 L10.965708,2.42895648 C11.5426798,1.86322723 12.4640974,1.85620921 13.0496196,2.41308426 L15.5337377,4.77566479 C15.8314604,5.0588212 16,5.45170806 16,5.86258077 L16,17.9148182 C16,18.7432453 15.3284271,19.4148182 14.5,19.4148182 L9.5,19.4148182 C8.67157288,19.4148182 8,18.7432453 8,17.9148182 Z" fill="#000000" fill-rule="nonzero"\ transform="translate(12.000000, 10.707409) rotate(-135.000000) translate(-12.000000, -10.707409) "/>\
+	                                        <rect fill="#000000" opacity="0.3" x="5" y="20" width="15" height="2" rx="1"/>\
+	                                    </g>\
+	                                </svg>\
+	                            </span>\
+	                        </a>\
+	                        <a href="javascript:;" class="btn btn-sm btn-clean btn-icon" title="Delete">\
+	                            <span class="svg-icon svg-icon-md">\
+	                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">\
+	                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">\
+	                                        <rect x="0" y="0" width="24" height="24"/>\
+	                                        <path d="M6,8 L6,20.5 C6,21.3284271 6.67157288,22 7.5,22 L16.5,22 C17.3284271,22 18,21.3284271 18,20.5 L18,8 L6,8 Z" fill="#000000" fill-rule="nonzero"/>\
+	                                        <path d="M14,4.5 L14,4 C14,3.44771525 13.5522847,3 13,3 L11,3 C10.4477153,3 10,3.44771525 10,4 L10,4.5 L5.5,4.5 C5.22385763,4.5 5,4.72385763 5,5 L5,5.5 C5,5.77614237 5.22385763,6 5.5,6 L18.5,6 C18.7761424,6 19,5.77614237 19,5.5 L19,5 C19,4.72385763 18.7761424,4.5 18.5,4.5 L14,4.5 Z" fill="#000000" opacity="0.3"/>\
+	                                    </g>\
+	                                </svg>\
+	                            </span>\
+	                        </a>\
+	                     ' + '</td>' +
+                            '</tr>';
+                    }
+
+                    $('#innerstudentList').html(html);
+                },
+                error: function() {
+                    $('#innerstudentList').html('No data Available');
+                    // $('#studentList').html( +'< tr >'+ '< td colspan = "7" > Not data available </td></tr >' );
+                }
+            });
+        }
+
+        showAllStudent();
+    </script> -->
+    <!-- end: Student List Script For Data -->
+
 </body>
 <!--end::Body-->
-
-<script>
-
-</script>
-
 </html>

@@ -10,8 +10,6 @@ class My_Controller extends CI_Controller
         $this->load->model('result_m');
         // $this->load->view('header.php');
         $this->form_validation->set_error_delimiters('<div class="text-danger">', '</div>');
-
-        
         
     }
 }

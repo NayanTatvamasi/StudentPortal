@@ -2,7 +2,7 @@
 <style>
     .glow-on-hover {
         /* width: 220px; */
-        height: 30px;
+        height: auto;
         border: none;
         text-align: center;
         outline: none;
@@ -77,6 +77,16 @@
         grid-template-columns: repeat(3, 1fr);
         /* Change repeat(3,1fr)  for 3 division tiles*/
         grid-gap: 2rem;
+        /* grid-auto-rows: 13rem; */
+        /* grid-auto-rows: minmax(2rem,13rem); */
+    }
+
+    .exevents {
+        display: grid;
+        grid-template-columns: 1fr 0.5fr 1fr 1fr;
+        /* grid-template-columns: repeat(4, 1fr); */
+        /* Change repeat(3,1fr)  for 3 division tiles*/
+        grid-gap: 0.5rem;
         /* grid-auto-rows: 13rem; */
         /* grid-auto-rows: minmax(2rem,13rem); */
     }
@@ -210,8 +220,21 @@
                     <h4 class="modal-title text-white ">Student Grades</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
                 </div>
+                <form method="post" id="filterForm" action="<?php echo base_url(); ?>export/createStudentXLS">
+                    <input type="hidden" id="estudentid" name="estudentid" />
+                    <div class="exevents" style="margin-top: 10px;">
+                        <div><input class="form-control me-sm-2" type="text" placeholder="Search" id="exmyInput"></div>
+                        <div>
+                            <?php if (!($data == '')) {
+                                $month = array('' => 'ALL', '1' => 'January', '2' => 'February', '3' => 'March', '4' => 'April', '5' => 'May', '6' => 'June', '7' => 'July', '8' => 'August', '9' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'); ?>
+                                <?php echo form_dropdown('monthSelect', $month, '', 'id="ctg" class="form-select"'); ?>
+                            <?php } ?>
+                        </div>
+                        <div><input type="submit" name="export" class="btn btn-success" value="Export" /></div>
 
-                <table class="table table-bordered table-responsive" style="margin-top: 20px; text-align:center;">
+                    </div>
+                </form>
+                <table class="table table-bordered table-responsive" style="text-align:center;background-color: #BCD2E5;">
                     <thead>
                         <tr>
                             <th>Number</th>
@@ -236,18 +259,42 @@
 
     <div>
         <h3>Result Lists</h3>
-    </div>
-    <div style="display:flex;">
-        <div>
-            <?php if ($y == '2') : ?>
-                <a href="#" id="addGrade" class="btn btn-success">Add Grades</a>
-            <?php endif; ?>
-
+        <div class="text-danger">
+            <?php if (isset($upload_error)) {
+                echo $upload_error;
+            }  ?>
         </div>
     </div>
+    <?php if ($y == '2') : ?>
+        <div style="display:grid; grid-template-columns: 0.8fr 1fr; ">
 
+            <div>
 
-    <table class="table table-bordered table-responsive" style="margin-top: 20px; text-align:center; border:1px;">
+                <a href="#" id="addGrade" class="btn btn-success">Add Grades</a>
+
+            </div>
+            <div align="right" style="display: grid; grid-template-columns: 2fr 0.5fr 0.5fr 0.5fr; grid-gap: 1rem;">
+
+                <!-- <form method="POST" action="<?php echo base_url(); ?>export/importGrade" enctype="multipart/form-data"> -->
+                <?php echo form_open_multipart('export/importGrade', 'class="form-horizontal"') ?>
+                <div class="form-group">
+                    <input type="file" name="userGradefile" id="userGradefile" class="form-control" />
+                </div>
+                <?php echo form_close(); ?>
+                <div>
+                    <button type="submit" name="import" class="btn btn-success">Import</button>
+                    <p><a href="<?= base_url("assignmentFile/demo.xlsx"); ?>"><strong>demo.xlsx</strong></a></p>
+                </div>
+
+                <form method="post" action="<?php echo base_url(); ?>export/createTeacherXLS">
+                    <input type="submit" name="export" class="btn btn-success" value="Export" />
+                </form>
+            </div>
+
+        </div>
+    <?php endif; ?>
+
+    <table class="table table-bordered table-responsive" style="margin-top: 20px; text-align:center; border:1px;background-color: #BCD2E5;">
         <thead>
             <tr>
                 <th>Student Grades Information</th>
@@ -255,7 +302,7 @@
             </tr>
         </thead>
     </table>
-    <div  class="container events" id="studentGradesInfo" style="margin-top: 20px;">
+    <div class="container events " id="studentGradesInfo" style="margin-top: 20px;">
     </div>
 
 
@@ -313,16 +360,23 @@
         }
         showAllStudent();
 
-        setInterval(function() {
-            showAllStudent();
-        }, 1000);
-
-
+        // setInterval(function() {
+        //     showAllStudent();
+        // }, 1000);
+        // search box in inner grade 
+        $("#exmyInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#innerGradeList tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
 
         $('#studentGradesInfo').on('click', '.studentInfo', function() {
             var id = $(this).attr('data');
+            $('#estudentid').val(id);
             // console.log(id);
             $('#innerGradeModel').modal('show');
+            $('#filterForm')[0].reset();
 
             function showAllGrades() {
                 // alert('click');
@@ -406,7 +460,7 @@
                         }
                         // $('.alert-success').html('Event ' + type + ' successfully').fadeIn().delay(2000).fadeOut('slow');
                         $('.toast-success').html('Grades ' + type + ' successfully').parent().addClass('show').fadeIn().delay(2000).fadeOut('slow');
-                    
+
                     } else {
                         $('.toast-error').html('Error to Edit').parent().addClass('show').fadeIn().delay(2000).fadeOut('slow');
                     }
@@ -416,7 +470,7 @@
                     $('.toast-error').html('Enter Proper Data').parent().addClass('show').fadeIn().delay(2000).fadeOut('slow');
                 }
             });
-            $('#innerGradeModel').modal('show');
+            // $('#innerGradeModel').modal('show');
 
 
         });
