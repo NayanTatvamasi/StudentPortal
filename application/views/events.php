@@ -108,6 +108,9 @@
                 <a class="nav-link" data-bs-toggle="tab" href="#myEvents">My Events</a>
             </li>
         <?php endif; ?>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" id="cal" href="#calendar">Calendar</a>
+        </li>
 
     </ul>
     <div id="myTabContent" class="tab-content">
@@ -115,7 +118,7 @@
             <div class="container events " id="innereventList" style="margin-top: 20px;">
             </div>
         </div>
-        <div class="tab-pane fade show active" id="classEvents">
+        <div class="tab-pane fade" id="classEvents">
             <div class="container events " id="onlyClassEvents" style="margin-top: 20px;">
             </div>
         </div>
@@ -128,6 +131,11 @@
             <div class="container events " id="myeventList" style="margin-top: 20px;">
             </div>
         </div>
+        <div class="tab-pane fade" id="calendar">
+            <div class="container events " id="calendarShow" style="margin-top: 20px;">
+            
+            </div>
+        </div>
     </div>
 
 
@@ -136,9 +144,14 @@
 
 <script>
     $(function() {
+
+        $('#cal').on('click',function(){
+            // alert('Click');
+            window.location.href="<?= base_url('calendar'); ?>";
+        });
         function showAllEvent() {
             // alert('click');
-            $count = 0;
+            
             $.ajax({
                 type: 'ajax',
                 url: '<?php echo base_url() ?>admin/eventList',
@@ -169,7 +182,7 @@
                             '</div>' +
                             '</div>' +
                             '</div></div>';
-                        if(data[i].classroomid=='<?= $z;?>') {
+                        if (data[i].classroomid == '<?= $z; ?>') {
                             htmlclass += '<div id="ihover">' +
                                 '<div class="card text-white bg-primary mb-1" >' +
                                 '<div class="card-header">' +
@@ -204,13 +217,13 @@
         }
 
         showAllEvent();
-        setInterval(function() {
-            showAllEvent();
-        }, 1000);
+        // setInterval(function() {
+        //     showAllEvent();
+        // }, 1000);
 
         function myAllEvent() {
             // alert('click');
-            $count = 0;
+        
             $.ajax({
                 type: 'ajax',
                 url: '<?php echo base_url() ?>admin/myeventList',
@@ -256,7 +269,7 @@
         myAllEvent();
 
 
-        // Add Student
+        // Add Events
         $('#addEvent').on('click', function() {
 
             $('#addEventModel').modal('show');

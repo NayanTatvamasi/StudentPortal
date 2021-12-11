@@ -22,6 +22,8 @@ class result extends MY_Controller
   public function addGrade()
   {
     $post = $this->input->post();
+    // print_r($post);
+    // exit;
     $msg['success'] = false;
     $result = $this->result_m->addMarks($post);
     $msg['type'] = 'add';
@@ -64,10 +66,10 @@ class result extends MY_Controller
     // $x = $this->session->userdata('userid');
     $z = $this->session->userdata('classroom');
     $s = $this->session->userdata('subject');
-    $id= $this->input->post('sid');
+    $id = $this->input->post('sid');
 
-     if ($y == '2') {
-      $list = $this->result_m->tmarksList($z, $s,$id);
+    if ($y == '2') {
+      $list = $this->result_m->tmarksList($z, $s, $id);
     } else {
       $list = $this->result_m->smarksList($id);
     }
@@ -80,8 +82,7 @@ class result extends MY_Controller
     // echo "<pre>";
     // print_r($mdata);
     // exit;
-    $error['error'] = '';
-    $this->load->view('assignment', $error);
+    $this->load->view('assignment');
   }
 
   public function assignmentList()
@@ -99,6 +100,70 @@ class result extends MY_Controller
     echo json_encode($list);
   }
 
+  public function studentAssignmentList()
+  {
+    $as_id = $this->input->post();
+    //  print_r($as_id);
+    //  exit;
+    $list = $this->result_m->studentAssignmentList($as_id);
+
+    if ($list) {
+
+      // foreach ($list as $changeL) {
+      //   $filename = basename($changeL['as_path']);
+      //   $list['as_path'] = $filename;
+      // }
+      // print_r($list);
+      // exit;
+      echo json_encode($list);
+    }
+  }
+
+  // public function is_upload_files()
+  // {
+  //   $config = [
+  //     'upload_path' => './assignmentFile/',
+  //     'allowed_types' => 'xlsx|docs|csv',
+  //   ];
+  //   $this->load->library('upload', $config);
+
+  //   $msg['success'] = false;
+  //   if ($this->upload->do_upload('SAfile')) {
+  //     $msg['type'] = 'Upload';
+  //     $msg['success'] = true;
+  //   }
+  //   echo json_encode($msg);
+  // }
+
+  public function uploadStudentAssignment()
+  {
+    $config = [
+      'upload_path' => './studentFiles/',
+      'allowed_types' => 'pdf|jpg|png|jpeg|xlsx|docx|csv',
+    ];
+    $this->load->library('upload', $config);
+
+    $msg['success'] = false;
+    if ($this->upload->do_upload('SAfile')) {
+
+      $post = $this->input->post();
+      $data = $this->upload->data();
+
+      $image_path = base_url("studentFiles/" . $data['raw_name'] . $data['file_ext']);
+      $post['as_path'] = $image_path;
+      $post['filter'] = 1;
+
+      // print_r($post);
+      // exit;
+
+      $this->result_m->uploadAssignment($post);
+      redirect('result/assignment');
+    } else {
+      $upload_error = $this->upload->display_errors();
+      $this->load->view('assignment', compact('upload_error'));
+    }
+  }
+
   // public function upload_files()
   //   {
   //       $config = [
@@ -107,7 +172,7 @@ class result extends MY_Controller
   //       ];
   //       $this->load->library('upload', $config);
 
-  //       if ($this->upload->do_upload()) {
+  //       if ($this->upload->do_upload('SAfile')) {
 
   //           $post = $this->input->post();
   //           $data = $this->upload->data();
@@ -134,39 +199,48 @@ class result extends MY_Controller
   public function assignmentCreate()
   {
 
-    if (isset($_FILES['userfile'])) {
-      echo '<pre>';
-      print_r($_FILES);
-      exit;
-    }
     $config = [
       'upload_path' => './assignmentFile/',
-      'allowed_types' => 'gif|jpg|png|jpeg',
+      'allowed_types' => 'gif|jpg|png|jpeg|zip|xlsx|docx|csv',
     ];
     $this->load->library('upload', $config);
-
-    $post = $this->input->post();
-    $data = $this->upload->data();
-
+    // if (isset($_FILES['userfile'])) {
     // echo '<pre>';
-    // print_r($data);
+    // print_r($_FILES);
     // exit;
 
-    $image_path = base_url("assignmentFile/" . $data['raw_name'] . $data['file_ext']);
-    $post['as_path'] = $image_path;
+    if ($this->upload->do_upload()) {
 
-    $msg['success'] = false;
-    $result = $this->result_m->addAssignment($post);
-    $msg['type'] = 'add';
-    if ($result) {
-      $msg['success'] = true;
+      $post = $this->input->post();
+      $data = $this->upload->data();
+
+      // echo '<pre>';
+      // print_r($data);
+      // exit;
+
+      $image_path = base_url("assignmentFile/" . $data['raw_name'] . $data['file_ext']);
+      $name = $data['raw_name'] . $data['file_ext'];
+      $post['as_path'] = $image_path;
+
+
+      // $msg['success'] = false;
+      $result = $this->result_m->addAssignment($post);
+      // $msg['type'] = 'add';
+      // if ($result) {
+      //   $msg['success'] = true;
+      // }
+      // echo json_encode($msg);
+      return redirect('result/assignment');
+    } else {
+
+      $upload_error = $this->upload->display_errors();
+      $this->load->view('assignment', compact('upload_error'));
     }
-    echo json_encode($msg);
   }
 
   public function eAssignment()
   {
-    $id=$this->input->get('aid');
+    $id = $this->input->get('aid');
     $result = $this->result_m->editAssignment($id);
     echo json_encode($result);
   }
@@ -195,23 +269,28 @@ class result extends MY_Controller
   {
     $config = [
       'upload_path' => './assignmentFile/',
-      'allowed_types' => 'gif|jpg|png|jpeg',
+      'allowed_types' => 'jpg|png|jpeg|pdf|docx|xlsx',
     ];
     $this->load->library('upload', $config);
-
     $post = $this->input->post();
-    $data = $this->upload->data();
-    $image_path = base_url("assignmentFile/" . $data['raw_name'] . $data['file_ext']);
-    $post['as_path'] = $image_path;
 
 
-    $msg['success'] = false;
-    $result = $this->result_m->updateAsssignment($post);
-    $msg['type'] = 'update';
-    if ($result) {
-      $msg['success'] = true;
+    if ($this->upload->do_upload()) {
+
+      $data = $this->upload->data();
+      $image_path = base_url("assignmentFile/" . $data['raw_name'] . $data['file_ext']);
+      $post['as_path'] = $image_path;
+
+
+      // $msg['success'] = false;
+      // $msg['type'] = 'update';
+      // if ($result) {
+      //   $msg['success'] = true;
+      // }
+      // echo json_encode($msg);
     }
-    echo json_encode($msg);
+    $this->result_m->updateAsssignment($post);
+    return redirect('result/assignment');
   }
 
   public function dAssignment()
