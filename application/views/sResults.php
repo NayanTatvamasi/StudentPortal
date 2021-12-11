@@ -276,16 +276,17 @@
             <div align="right" style="display: grid; grid-template-columns: 2fr 0.5fr 0.5fr 0.5fr; grid-gap: 1rem;">
 
                 <!-- <form method="POST" action="<?php echo base_url(); ?>export/importGrade" enctype="multipart/form-data"> -->
-                <?php echo form_open_multipart('export/importGrade', 'class="form-horizontal"') ?>
+                
                 <div class="form-group">
+                <?php echo form_open_multipart('export/importGrade', 'class="form-horizontal"') ?>
                     <input type="file" name="userGradefile" id="userGradefile" class="form-control" />
                 </div>
-                <?php echo form_close(); ?>
+               
                 <div>
                     <button type="submit" name="import" class="btn btn-success">Import</button>
                     <p><a href="<?= base_url("assignmentFile/demo.xlsx"); ?>"><strong>demo.xlsx</strong></a></p>
                 </div>
-
+                <?php echo form_close(); ?>
                 <form method="post" action="<?php echo base_url(); ?>export/createTeacherXLS">
                     <input type="submit" name="export" class="btn btn-success" value="Export" />
                 </form>
@@ -363,6 +364,7 @@
         // setInterval(function() {
         //     showAllStudent();
         // }, 1000);
+        
         // search box in inner grade 
         $("#exmyInput").on("keyup", function() {
             var value = $(this).val().toLowerCase();
@@ -471,8 +473,6 @@
                 }
             });
             // $('#innerGradeModel').modal('show');
-
-
         });
 
 

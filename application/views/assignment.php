@@ -11,30 +11,19 @@
         /* grid-auto-rows: minmax(2rem,13rem); */
     }
 
-    .assSubmit {
+    #assSubmit {
         display: grid;
-        grid-template-columns: 0.5fr 0.5fr 1fr;
+        grid-template-columns: 0.35fr 1fr;
         grid-gap: 1rem;
     }
 
-    .css-fileUpload {
-        display: flex;
-        border: 1px solid black;
-        border-radius: 5%;
-        padding: 6px 12px;
-        /* margin-top: 10px; */
+    .btnfileUpload {
+
         background-color: white;
         color: black;
+        align-items: center;
     }
 
-    input[type='file'] {
-        display: none;
-    }
-
-    .fa-upload {
-
-        margin-top: 4px;
-    }
 
     .evefooter {
         display: grid;
@@ -49,18 +38,20 @@
         transform: scale(1.01);
     }
 
+    .exevents {
+        display: grid;
+        grid-template-columns: 1fr 0.5fr 1fr 1fr;
+        grid-gap: 0.5rem;
+        margin-left: 2%;
+        margin-bottom: 1%;
 
-    #imp {
-        width: 15px;
-        height: 15px;
-        /* transition: background 0.5s ease; */
     }
 </style>
 
 <div class="container">
-    <div class="alert alert-success" style="display: none;">
+    <!-- <div class="alert alert-success" style="display: none;">
         Success
-    </div>
+    </div> -->
     <div id="addAssignmentModel" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document" style="width: 40%;">
             <div class="modal-content">
@@ -123,6 +114,7 @@
                     <!-- <input type="submit" class="btn btn-primary" id="btnSave" value="Save" /> -->
                     <?php echo form_submit(['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'btnSave', 'value' => 'Save']); ?>
                 </div>
+                <?php echo form_close(); ?>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -145,6 +137,64 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+
+    <div id="uploadModel" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upload Assignment</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                </div>
+                <div class="modal-body">
+                    <?php echo form_open_multipart('result/uploadStudentAssignment', 'id="SAform" class="form-horizontal"'); ?>
+                    <input id="as_id_set" name="as_id" type="hidden" value="">
+                    <input name="studentid" type="hidden" value="<?= $x; ?>">
+                    <div class="input-group mb-3">
+                        <label for="SAfile" class="input-group-text"><i class="fas fa-upload">Upload</i></label>
+                        <input type="text" id="show_name" class="form-control">
+                        <input style="visibility:hidden;" type="file" name="SAfile" id="SAfile" class="form-control" />
+                    </div>
+                    <button type="submit" id="btnUpload" class="btn btn-primary">Upload</button>
+                    <?php echo form_close(); ?>
+                </div>
+
+
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div id="innerAssignmentModel" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document" style="width: 90%;">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title text-white ">Student Assignment</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                </div>
+
+                <div class="exevents" style="margin-top: 10px;">
+                    <input class="form-control me-sm-2" type="text" placeholder="Search" id="exmyInput">
+
+                </div>
+
+                <table class="table table-bordered table-responsive" style="text-align:center;background-color: #BCD2E5;">
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Student ID</th>
+                            <th>Assignment</th>
+                            <th>Add Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="innerAssignmentList">
+
+                    </tbody>
+                </table>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div>
         <h3>Assignments</h3>
     </div>
@@ -162,17 +212,18 @@
                 <?php if (!($y == '1')) : ?>
                     <a href="#" id="addAssignment" class="btn btn-success">Create New Assignment</a>
                     <!--add button-->
-                    <div class="text-danger">
-                        <?php if (isset($upload_error)) {
-                            echo $upload_error;
-                        }  ?>
-                    </div>
+
                 <?php endif; ?>
+                <div class="text-danger">
+                    <?php if (isset($upload_error)) {
+                        echo $upload_error;
+                    }  ?>
+                </div>
             </div>
             <div class="container events " id="allAssignmentList" style="margin-top: 20px;">
                 <!--All Assignment List-->
             </div>
-            <!-- <a href="http://localhost/portal/assignmentFile/wp2998365.jpg" width="100px" height="100px" download>Download</a> -->
+
         </div>
         <div class="tab-pane fade" id="myIMP">
             <div class="container events " id="ImpAssignmentList" style="margin-top: 20px;">
@@ -184,6 +235,14 @@
 </div>
 
 <script>
+    //show file uploaded name
+    $("#SAfile").change(function() {
+
+        filename = this.files[0].name;
+        $('#show_name').val(filename);
+        // console.log(filename);
+    });
+
     // Image Show Section 
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -198,6 +257,73 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    // student assignment List
+    $('#allAssignmentList').on('click', '#clickList', function() {
+
+        $('#innerAssignmentModel').modal('show');
+        var id = $(this).attr('data');
+        // alert(id);
+
+        // alert('click');
+        $count = 0;
+        $.ajax({
+            type: 'ajax',
+            method: 'post',
+            url: '<?php echo base_url() ?>result/studentAssignmentList',
+            dataType: 'json',
+            data: {
+                aid: id
+            },
+            success: function(data) {
+                // alert(data);
+                var html = '';
+                var i, c = 0;
+
+                for (i = 0; i < data.length; i++) {
+
+                    html += '<tr>' +
+                        '<td>' + ++c + '</td>' +
+                        '<td>' + data[i].studentid + '</td>' +
+                        '<td>' +
+                        '<img id="imageView" src="' + data[i].as_path + '" width="100px" height="100px">' +
+                        // '<a  href="' + data[i].as_path + '">' +data[i].as_path +'</a>'+
+                        // '<iframe src="'+data[i].as_path+'" width="100px" height="100px"/>'+
+                        '</td>' +
+                        '<td>' + data[i].add_time + '</td>' +
+                        '</tr>';
+                }
+
+                $('#innerAssignmentList').html(html);
+            },
+            error: function() {
+
+                $('#innerAssignmentList').html('<tr><td colspan=5>' + 'No data Available' + '</td></tr>');
+                // $('#studentList').html( +'< tr >'+ '< td colspan = "7" > Not data available </td></tr >' );
+            }
+
+        });
+
+
+    });
+
+    //on click file view in new page................................................
+    $('#innerAssignmentList').on('click','#imageView', function() {
+        // alert('hello');
+        var url=$(this).attr('src');
+        window.open(url, '_blank');
+    });
+
+    // inner search box for assignmentList of Student
+    $("#exmyInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#innerAssignmentList tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+
+
 
     function showAllAssignment() {
         // alert('click');
@@ -218,7 +344,7 @@
                         '<div class="card-header ">' +
                         '<?php if (!($y == '1')) { ?>' +
                         '<div>' +
-                        '<a href="javascript:;" id="impA" class="item-check" data="' + data[i].as_id + '"><input type="checkbox"' + data[i].as_check + '/></a>' +
+                        '<a href="javascript:;"  class="item-check" data="' + data[i].as_id + '"><input type="checkbox"' + data[i].as_check + '/></a>' +
                         '</div>' +
                         '<?php } ?>' +
                         '</div>' +
@@ -227,12 +353,26 @@
                         '<div style="font-size:12px; text-align: right;"> Dead Line:-' + data[i].as_date + ' || ' + data[i].as_time + '</div>' +
                         '</div>' +
 
+                        '<?php if ($y == '2') { ?>' +
+                        '<div id="clickList" data="' + data[i].as_id + '">' +
+                        '<?php } ?>' +
+
                         '<h4 class="card-title">' + data[i].as_Title + '</h4>' +
                         '<p class="card-text">' + data[i].as_body + '</p>' +
+
+                        '<?php if ($y == '2') { ?>' +
+                        '</div>' +
+                        '<?php } ?>' +
+
+                        '<div id="assSubmit">' +
+                        '<?php if (($y == '1')) { ?>' +
+                        '<a href="javascript:;" class="btn btnfileUpload" value="' + data[i].as_id + '" data="' + data[i].as_Title + '"><i class="fas fa-upload">&nbsp&nbspUpload</i></a>' +
+                        '<?php } ?>' +
+
+
                         '<div align="right"><a href="' + data[i].as_path + '" download>Download</a></div>' +
-                        '<div class="assSubmit"><label class="css-fileUpload"><input type="file" name="SAfile" id="SAfile" class="form-control" value="" />' +
-                        '<i class="fas fa-upload">&nbsp&nbspUpload</i></label>' +
-                        '<a href="javascript:;" class="btn btn-warning assignment-submit" data="' + data[i].as_id + '">Submit</a></div>' +
+                        '</div>' +
+
 
                         '<div style="font-size:10px; text-align: right; ">' +
                         // '<figcaption class="modal-footer" style=" font-size:10px; padding:0;">' +
@@ -390,16 +530,19 @@
 
         $('#addAssignmentModel').modal('show');
         $('#addAssignmentModel').find('.modal-title').text('Create Assignment');
-        // $('#assignmentForm').attr('action', '<?php echo base_url() ?>result/assignmentCreate');
-        // $('#assignmentForm')[0].reset();
+        // $('#assignmentForm').attr('action', '<//?php echo base_url() ?>result/assignmentCreate');
+        $('#assignmentForm')[0].reset();
     });
 
-    //Submit Assignment
-    $('#allAssignmentList').on('click', '.assignment-submit', function() {
-        var id = $(this).attr('data');
-        // alert(id);
-
+    //on Upload click
+    $('#allAssignmentList').on('click', '.btnfileUpload', function() {
+        var id = $(this).attr('value');
+        var title = $(this).attr('data');
+        $('#as_id_set').attr('value', id)
+        $('#uploadModel').find('.modal-title').text(title);
+        $('#uploadModel').modal('show');
     });
+
     //save 
     // $('#btnSave').on('click', function() {
 

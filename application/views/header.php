@@ -7,6 +7,7 @@
   <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <link rel="shortcut icon" href="<?= base_url('Assets/image/class.jpg'); ?>" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
 </head>
 <style>
   #navbarH li:hover {

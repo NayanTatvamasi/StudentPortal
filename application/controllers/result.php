@@ -100,6 +100,70 @@ class result extends MY_Controller
     echo json_encode($list);
   }
 
+  public function studentAssignmentList()
+  {
+    $as_id = $this->input->post();
+    //  print_r($as_id);
+    //  exit;
+    $list = $this->result_m->studentAssignmentList($as_id);
+
+    if ($list) {
+
+      // foreach ($list as $changeL) {
+      //   $filename = basename($changeL['as_path']);
+      //   $list['as_path'] = $filename;
+      // }
+      // print_r($list);
+      // exit;
+      echo json_encode($list);
+    }
+  }
+
+  // public function is_upload_files()
+  // {
+  //   $config = [
+  //     'upload_path' => './assignmentFile/',
+  //     'allowed_types' => 'xlsx|docs|csv',
+  //   ];
+  //   $this->load->library('upload', $config);
+
+  //   $msg['success'] = false;
+  //   if ($this->upload->do_upload('SAfile')) {
+  //     $msg['type'] = 'Upload';
+  //     $msg['success'] = true;
+  //   }
+  //   echo json_encode($msg);
+  // }
+
+  public function uploadStudentAssignment()
+  {
+    $config = [
+      'upload_path' => './studentFiles/',
+      'allowed_types' => 'pdf|jpg|png|jpeg|xlsx|docx|csv',
+    ];
+    $this->load->library('upload', $config);
+
+    $msg['success'] = false;
+    if ($this->upload->do_upload('SAfile')) {
+
+      $post = $this->input->post();
+      $data = $this->upload->data();
+
+      $image_path = base_url("studentFiles/" . $data['raw_name'] . $data['file_ext']);
+      $post['as_path'] = $image_path;
+      $post['filter'] = 1;
+
+      // print_r($post);
+      // exit;
+
+      $this->result_m->uploadAssignment($post);
+      redirect('result/assignment');
+    } else {
+      $upload_error = $this->upload->display_errors();
+      $this->load->view('assignment', compact('upload_error'));
+    }
+  }
+
   // public function upload_files()
   //   {
   //       $config = [
@@ -108,7 +172,7 @@ class result extends MY_Controller
   //       ];
   //       $this->load->library('upload', $config);
 
-  //       if ($this->upload->do_upload()) {
+  //       if ($this->upload->do_upload('SAfile')) {
 
   //           $post = $this->input->post();
   //           $data = $this->upload->data();
@@ -137,7 +201,7 @@ class result extends MY_Controller
 
     $config = [
       'upload_path' => './assignmentFile/',
-      'allowed_types' => 'gif|jpg|png|jpeg|zip',
+      'allowed_types' => 'gif|jpg|png|jpeg|zip|xlsx|docx|csv',
     ];
     $this->load->library('upload', $config);
     // if (isset($_FILES['userfile'])) {
@@ -154,10 +218,10 @@ class result extends MY_Controller
       // print_r($data);
       // exit;
 
-      $image_path = base_url("assignmentFile/".$data['raw_name'].$data['file_ext']);
-      $name= $data['raw_name'] . $data['file_ext'];
+      $image_path = base_url("assignmentFile/" . $data['raw_name'] . $data['file_ext']);
+      $name = $data['raw_name'] . $data['file_ext'];
       $post['as_path'] = $image_path;
-    
+
 
       // $msg['success'] = false;
       $result = $this->result_m->addAssignment($post);
@@ -224,11 +288,9 @@ class result extends MY_Controller
       //   $msg['success'] = true;
       // }
       // echo json_encode($msg);
-    } 
+    }
     $this->result_m->updateAsssignment($post);
     return redirect('result/assignment');
-
-
   }
 
   public function dAssignment()

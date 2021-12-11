@@ -1,3 +1,43 @@
+<script>
+    //file upload in ajax
+    {
+        var file = $('#show_name').get(0).files[0];
+        var formData = new FormData();
+        formData.append('file', file);
+    }
+    $('#import_form').on('submit', function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: "<?php echo base_url(); ?>excel_import/import",
+            method: "POST",
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                $('#file').val('');
+                load_data();
+                alert(data);
+            }
+        })
+    });
+
+
+    // file delete in codeigniter
+    {
+        delete_files('./path/to/directory/'); //all file in directory
+    }
+
+    // URL parce and get specific string
+    {
+        $bits = parse_url($list[0]['as_path']);
+        $filename = basename($bits['path']);
+        print_r($filename);
+        exit;
+    }
+</script>
+
+
 <body>
 
     <div id="" class="modal fade" tabindex="-1" role="dialog">

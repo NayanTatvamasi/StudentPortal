@@ -61,27 +61,32 @@ class Export extends CI_Controller
                 $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
                 $objReader = PHPExcel_IOFactory::createReader($inputFileType);
                 $objPHPExcel = $objReader->load($inputFileName);
-                $allDataInSheet = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+                $allDataInSheet = array_filter($objPHPExcel->getActiveSheet()->toArray(null, true, true, true));
+                
+                // echo '<pre>';
+                // print_r($allDataInSheet);
+                // exit;
                 $flag = true;
                 $i = 0;
+                $arrayData = array();
                 foreach ($allDataInSheet as $value) {
                     if ($flag) {
                         $flag = false;
                         continue;
                     }
+                    if(!empty( $value['C'])){
+                        $arrayData[$i] = array(
+                            'event_date' => $value['B'],
+                            'studentid' => $value['C'],
+                            'classroomid' => $value['D'],
+                            'exam_category' => $value['E'],
+                            'subject' => $value['F'],
+                            'obtain_m' => $value['G'],
+                            'total_m' => $value['H'],
+                            'percentage' => $value['I']
 
-                    $arrayData[$i] = array(
-                        'm_id' => $value['A'],
-                        'event_date' => $value['B'],
-                        'studentid' => $value['C'],
-                        'classroomid' => $value['D'],
-                        'exam_category' => $value['E'],
-                        'subject' => $value['F'],
-                        'obtain_m' => $value['G'],
-                        'total_m' => $value['H'],
-                        'percentage' => $value['I']
-
-                    );
+                        );
+                    }
 
                     $i++;
                 }
@@ -89,7 +94,7 @@ class Export extends CI_Controller
                 // print_r($arrayData);
                 // exit;
 
-                $result = $this->result_m->addMarks($arrayData);
+                $result = $this->result_m->addImportMarks($arrayData);
                 if ($result) {
                     echo "Imported successfully";
                 } else {

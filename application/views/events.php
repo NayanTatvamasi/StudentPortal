@@ -269,7 +269,7 @@
         myAllEvent();
 
 
-        // Add Student
+        // Add Events
         $('#addEvent').on('click', function() {
 
             $('#addEventModel').modal('show');

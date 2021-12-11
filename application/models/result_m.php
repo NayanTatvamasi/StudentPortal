@@ -35,9 +35,18 @@ class result_m extends CI_Model
 
 	public function addMarks($dataArray)
 	{
-		foreach($dataArray as $row){
-		$this->db->insert('marks', $row);
+		$this->db->insert('marks', $dataArray);
+
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
 		}
+	}
+	public function addImportMarks($dataArray)
+	{
+		$this->db->insert_batch('marks', $dataArray);
+
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		} else {
@@ -131,7 +140,7 @@ class result_m extends CI_Model
 		if ($month == '') {
 			$query = $this->db->join('student', 'student.studentid=marks.studentid')->where('marks.studentid', $x)->get('marks');
 		} else {
-			$query = $this->db->join('student', 'student.studentid=marks.studentid')->where('marks.studentid', $x)->where('MONTH(marks.event_date)',$month)->get('marks');
+			$query = $this->db->join('student', 'student.studentid=marks.studentid')->where('marks.studentid', $x)->where('MONTH(marks.event_date)', $month)->get('marks');
 		}
 		if ($query->num_rows() > 0) {
 			return $query->result();
@@ -147,6 +156,19 @@ class result_m extends CI_Model
 		if ($query->num_rows() > 0) {
 			return $query->result_array();
 			// echo "<pre>";
+			// print_r($query->result_array());
+			// exit;
+		} else {
+			return false;
+		}
+	}
+
+	public function studentAssignmentList($x)
+	{
+		$this->db->order_by('studentid', 'asc');
+		$query = $this->db->where('as_id', $x['aid'])->get('student_assignments');
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
 			// print_r($query->result_array());
 			// exit;
 		} else {
@@ -171,6 +193,15 @@ class result_m extends CI_Model
 	public function addAssignment($dataArray)
 	{
 		$this->db->insert('assignment', $dataArray);
+		if ($this->db->affected_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public function uploadAssignment($dataArray)
+	{
+		$this->db->insert('student_assignments', $dataArray);
 		if ($this->db->affected_rows() > 0) {
 			return true;
 		} else {
