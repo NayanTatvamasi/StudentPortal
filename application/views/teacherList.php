@@ -1,3 +1,7 @@
+<?php
+if (($_SESSION['category'] == '1' || $_SESSION['category'] == '2' ))                     //session
+    return redirect('admin') ?>
+
 <?php include('header.php'); ?>
 <style>
     .myCharts {

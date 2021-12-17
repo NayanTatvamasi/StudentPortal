@@ -1,3 +1,7 @@
+<?php
+if ($_SESSION['category']==='3')                     //session
+    return redirect('admin'); ?>
+
 <?php include('header.php'); ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 <style>

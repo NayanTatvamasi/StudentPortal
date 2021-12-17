@@ -51,7 +51,7 @@
 </script>
 
 <body class="bk-image">
-  <div style="z-index:9999999999; left: 77%; position: fixed; margin-top:100px; ; margin-bottom:0;" id="toast">
+  <div style="z-index:9999999999; left: 77%; position: fixed; margin-top:40px; ; margin-bottom:0;" id="toast">
     <div class="toast card text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true" style="display: none;">
       <div class="card-header">
         <strong class="me-auto">Success</strong>

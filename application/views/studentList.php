@@ -1,3 +1,6 @@
+<?php
+if ($_SESSION['category']=='1')                     //session
+    return redirect('admin'); ?>
 <?php include('header.php'); ?>
 <!-- <style>
     #ihover:hover {

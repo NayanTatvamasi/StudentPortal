@@ -11,7 +11,7 @@ class admin extends MY_controller
 
     public function logout()                                         //session
     {
-        $this->session->unset_userdata('userid', 'category', 'classroom');         //session
+        $this->session->unset_userdata('userid', 'category', 'classroom','subject');         //session
         redirect('login');
     }
 
@@ -35,6 +35,11 @@ class admin extends MY_controller
         $this->load->view('dashboard');
     }
 
+    public function index()
+    {
+        $this->load->view('dashboard');
+    }
+
     public function events()
     {
         $this->load->view('events');
@@ -49,19 +54,19 @@ class admin extends MY_controller
     {
         $x = $this->session->userdata('userid');
         $y = $this->session->userdata('category');
-        if(!($y=='1')){
+        if (!($y == '1')) {
             $eList = $this->student_m->myeventDetails($x);
             echo json_encode($eList);
-        }else{
+        } else {
             echo json_encode("");
         }
-        
     }
 
     public function eventCreate()
     {
         $x = $this->session->userdata('userid');
-        $post = $this->input->post();
+        // $post = $this->input->post();
+        $post = $this->security->xss_clean($this->input->post());
         $msg['success'] = false;
         $result = $this->student_m->addEvent($post, $x);
         $msg['type'] = 'add';

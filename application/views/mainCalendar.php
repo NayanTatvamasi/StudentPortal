@@ -1,4 +1,5 @@
-<?//php include('header.php');?>
+<? //php include('header.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <!--begin::Head-->
@@ -64,7 +65,7 @@
                                     </h3>
                                 </div>
                                 <div class="card-toolbar">
-                                    <a href="<?= base_url('admin/events');?>" class="btn btn-light-primary font-weight-bold">
+                                    <a href="<?= base_url('admin/events'); ?>" class="btn btn-light-primary font-weight-bold">
                                         <i class="ki ki-plus icon-md mr-2"></i> Add Event
                                     </a>
                                 </div>
@@ -81,9 +82,6 @@
 
             </div>
             <!--end::Wrapper-->
-
-
-
         </div>
         <!--end::Page-->
     </div>
@@ -162,17 +160,8 @@
     <script src="<?= base_url('Assets/dist/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js'); ?>"></script>
     <!--end::Page Vendors-->
 
-    <!--begin::Page Scripts(used by this page)-->
-    <script src="<?= base_url('Assets/dist/assets/js/pages/widgets.js'); ?>"></script>
-    <!--end::Page Scripts-->
+ 
 
-    <!--begin::Page Vendors(used by this page)-->
-    <script src="<?= base_url('Assets/dist/assets/plugins/custom/datatables/datatables.bundle.js'); ?>"></script>
-    <!--end::Page Vendors-->
-
-    <!--begin::Page Scripts(used by this page)-->
-    <script src="<?= base_url('Assets/dist/assets/js/pages/crud/datatables/basic/scrollable.js'); ?>"></script>
-    <!--end::Page Scripts-->
 
 
     <!--begin: Calendar Script For Data -->
@@ -310,4 +299,5 @@
 
 </body>
 <!--end::Body-->
+
 </html>
